@@ -119,15 +119,20 @@ def delUser(username=None, password=None):
         myresult= mycursor.fetchall()
         mydb.commit()
         if len(myresult)>0:
-            query="DELETE FROM students WHERE l_name=%s"
-            value= (password,)
-            mycursor.execute(query,value)
-            myresult= mycursor.fetchall()
-            mydb.commit()
-            try:
-                print("user deleted successfully")
-            except:
-                print("Something went wrong")
+            if myresult[0][1]==password:
+                query="DELETE FROM students WHERE l_name=%s"
+                value= (password,)
+                mycursor.execute(query,value)
+                myresult= mycursor.fetchall()
+                mydb.commit()
+                try:
+                    print("user deleted successfully")
+                except:
+                    print("Something went wrong")
+            else:
+                print('Wrong password')
+        else:
+            print('invalid user')
 
 # if len(arguments)<=1:
 #     print("Welcome !!!!")
@@ -152,3 +157,5 @@ def delUser(username=None, password=None):
 #         delUser(email,password)
 # else:
 #     print("Not a valid method")
+
+# delUser('sukanta','123456')
